@@ -1,0 +1,699 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: support@dyspatch.io
+    name: Dyspatch Support
+    url: https://docs.dyspatch.io
+  description: "# Introduction\n\nThe Dyspatch API is based on the REST paradigm,\
+    \ and features resource based URLs with standard HTTP response\ncodes to indicate\
+    \ errors. We use standard HTTP authentication and request verbs, and all responses\
+    \ are JSON formatted.\nSee our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/)\
+    \ for more details on\nhow to implement Dyspatch.\n\n## API Client Libraries\n\
+    \nDyspatch provides API Clients for popular languages and web frameworks. \n\n\
+    - [Java](https://github.com/getdyspatch/dyspatch-java)\n- [Javascript](https://github.com/getdyspatch/dyspatch-javascript)\n\
+    - [Python](https://github.com/getdyspatch/dyspatch-python)\n"
+  termsOfService: https://www.dyspatch.io/legal/terms-of-service/
+  title: Dyspatch API
+  version: "2018.08"
+  x-logo:
+    url: /api/dyspatch_logo.png
+servers:
+- url: https://api.dyspatch.io/
+tags:
+- description: |
+    Templates are the email templates found in your Dyspatch account. Only the published Template Draft is returned.
+    A typical integration will start with using the Templates list endpoint to iterate through and sync Templates.
+  name: Templates
+- description: |
+    Localization objects are the same as Template objects except they contain localized content.
+    If your account is using localizations then use this instead of the compiled Template object.
+  name: Localizations
+paths:
+  /templates:
+    get:
+      description: Gets a list of Template Metadata objects for all templates. Up to 25 results returned before results are paginated.
+      parameters:
+      - description: A cursor value used to retrieve a specific page from a paginated result set.
+        in: query
+        name: cursor
+        schema:
+          type: string
+      - description: A version of the API that should be used for the request. For example, to use version "2018.08", set the value to "application/vnd.dyspatch.2018.08+json"
+        in: header
+        name: Accept
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/TemplatesRead'
+          description: A list of templates
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        400:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: List Templates
+      tags:
+      - Templates
+  /templates/{templateId}:
+    get:
+      description: Gets a template object with the matching ID. If the template has published content the "compiled" field will contain the template .
+      parameters:
+      - description: A template ID
+        in: path
+        name: templateId
+        required: true
+        schema:
+          type: string
+      - description: A version of the API that should be used for the request. For example, to use version "2018.08", set the value to "application/vnd.dyspatch.2018.08+json"
+        in: header
+        name: Accept
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/TemplateRead'
+          description: A template object with the requested ID. If the template has no published content the "compiled" field will be *null*.
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+        400:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: Get Template by ID
+      tags:
+      - Templates
+  /localizations/{localizationId}:
+    get:
+      description: Returns a specific localization object with a matching ID
+      parameters:
+      - description: A localization ID
+        in: path
+        name: localizationId
+        required: true
+        schema:
+          type: string
+      - description: A version of the API that should be used for the request. For example, to use version "2018.08", set the value to "application/vnd.dyspatch.2018.08+json"
+        in: header
+        name: Accept
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/LocalizationRead'
+          description: A localization object with the requested ID
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the current time window
+              schema:
+                type: integer
+        400:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2018.08+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: Get Localization Object by ID
+      tags:
+      - Localizations
+components:
+  parameters:
+    cursor:
+      description: A cursor value used to retrieve a specific page from a paginated result set.
+      in: query
+      name: cursor
+      schema:
+        type: string
+    localizationId:
+      description: A localization ID
+      in: path
+      name: localizationId
+      required: true
+      schema:
+        type: string
+    templateId:
+      description: A template ID
+      in: path
+      name: templateId
+      required: true
+      schema:
+        type: string
+    version:
+      description: A version of the API that should be used for the request. For example, to use version "2018.08", set the value to "application/vnd.dyspatch.2018.08+json"
+      in: header
+      name: Accept
+      required: true
+      schema:
+        type: string
+  responses:
+    Unauthenticated:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Unauthenticated
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+    InvalidRequest:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Invalid request
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+    Unauthorized:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Unauthorized
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+    InternalError:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Server error
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+    RateLimited:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+    NotFound:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/APIError'
+      description: Resource not found
+      headers:
+        X-RateLimit-Remaining:
+          description: The number of requests left for the time window.
+          schema:
+            type: integer
+  schemas:
+    cursor:
+      description: Information about paginated results
+      properties:
+        next:
+          description: A cursor to fetch the next page of results
+          type: string
+        hasMore:
+          description: Whether there is a next page of results
+          type: boolean
+      type: object
+    TemplatesRead:
+      properties:
+        cursor:
+          $ref: '#/components/schemas/cursor'
+        data:
+          description: A list of template metadata objects
+          items:
+            $ref: '#/components/schemas/TemplateMetaRead'
+          type: array
+      type: object
+    languageId:
+      description: "A language identifier comprised of a language and a country identifier.\
+        \ \nSee [supported languages](https://docs.dyspatch.io/localization/supported_languages/).\n"
+      example: en-US
+      type: string
+    LocalizationMetaRead:
+      properties:
+        id:
+          description: An opaque, unique identifier for a localization
+          example: loc_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+        language:
+          description: "A language identifier comprised of a language and a country\
+            \ identifier. \nSee [supported languages](https://docs.dyspatch.io/localization/supported_languages/).\n"
+          example: en-US
+          type: string
+        name:
+          description: The user-specified name of a localization
+          example: English (US)
+          type: string
+        url:
+          description: The API url for a specific localization
+          example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+      type: object
+    templateId:
+      description: An opaque, unique identifier for a template
+      example: tem_g3L7Cw6Hp5wU
+      type: string
+    TemplateRead:
+      properties:
+        id:
+          description: An opaque, unique identifier for a template
+          example: tem_g3L7Cw6Hp5wU
+          type: string
+        name:
+          description: The name of a template
+          type: string
+        description:
+          description: A description of the template
+          type: string
+        url:
+          description: The API url for a specific template
+          example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+        compiled:
+          $ref: '#/components/schemas/CompiledRead'
+        createdAt:
+          description: The time of initial creation
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time of last update
+          format: date-time
+          type: string
+        localizations:
+          description: A list of the Template's available localizations
+          items:
+            $ref: '#/components/schemas/LocalizationMetaRead'
+          type: array
+      type: object
+    templateUrl:
+      description: The API url for a specific template
+      example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
+      type: string
+    createdAt:
+      description: The time of initial creation
+      format: date-time
+      type: string
+    LocalizationRead:
+      properties:
+        id:
+          description: An opaque, unique identifier for a localization
+          example: loc_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+        language:
+          description: "A language identifier comprised of a language and a country\
+            \ identifier. \nSee [supported languages](https://docs.dyspatch.io/localization/supported_languages/).\n"
+          example: en-US
+          type: string
+        url:
+          description: The API url for a specific localization
+          example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+        template:
+          description: An opaque, unique identifier for a template
+          example: tem_g3L7Cw6Hp5wU
+          type: string
+        compiled:
+          $ref: '#/components/schemas/CompiledRead'
+        createdAt:
+          description: The time of initial creation
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time of last update
+          format: date-time
+          type: string
+        name:
+          description: The user-specified name of a localization
+          example: English (US)
+          type: string
+      type: object
+    localizationName:
+      description: The user-specified name of a localization
+      example: English (US)
+      type: string
+    templateName:
+      description: The name of a template
+      type: string
+    localizationId:
+      description: An opaque, unique identifier for a localization
+      example: loc_g3L7Cw6Hp5wUaf395LehwK
+      type: string
+    templateDescription:
+      description: A description of the template
+      type: string
+    localizationUrl:
+      description: The API url for a specific localization
+      example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
+      type: string
+    TemplateMetaRead:
+      properties:
+        id:
+          description: An opaque, unique identifier for a template
+          example: tem_g3L7Cw6Hp5wU
+          type: string
+        name:
+          description: The name of a template
+          type: string
+        description:
+          description: A description of the template
+          type: string
+        url:
+          description: The API url for a specific template
+          example: /templates/tem_g3L7Cw6Hp5wUaf395LehwK
+          type: string
+        localizations:
+          description: A list of the template's available localization objects
+          items:
+            $ref: '#/components/schemas/LocalizationMetaRead'
+          type: array
+        createdAt:
+          description: The time of initial creation
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time of last update
+          format: date-time
+          type: string
+      type: object
+    APIError:
+      properties:
+        code:
+          description: |
+            Error code:
+              * server_error - Internal server error.
+              * invalid_parameter - Validation error, parameter will contain invalid field and message will contain the reason.
+              * invalid_body - Body could not be parsed, message will contain the reason.
+              * invalid_request - Validation error, the protocol used to make the request was not https.
+              * unauthorized - Credentials were found but permissions were not sufficient.
+              * unauthenticated - Credentials were not found or were not valid.
+              * not_found - The requested resource was not found.
+              * rate_limited - The request was refused because a rate limit was exceeded. There is an account wide rate limit of 3600 requests per-minute, although that is subject to change. The current remaining rate limit can be viewed by checking the X-Ratelimit-Remaining header.
+          enum:
+          - server_error
+          - invalid_parameter
+          - invalid_body
+          - invalid_request
+          - unauthorized
+          - unauthenticated
+          - not_found
+          - rate_limited
+          type: string
+        message:
+          description: Human readable error message
+          type: string
+        parameter:
+          description: The invalid parameter, if 'code' is invalid_parameter
+          type: string
+      type: object
+    CompiledRead:
+      properties:
+        sender:
+          description: Sender address
+          example: Example <example@dyspatch.io>
+          type: string
+        replyTo:
+          description: Reply-To address
+          example: Example <example@dyspatch.io>
+          type: string
+        subject:
+          description: Base64 encoded template subject line
+          example: PGh0bWw+PC9odG1sPgo=
+          format: byte
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+        html:
+          description: Base64 encoded template HTML body
+          example: PGh0bWw+PC9odG1sPgo=
+          format: byte
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+        text:
+          description: Base64 encoded template text body
+          example: PGh0bWw+PC9odG1sPgo=
+          format: byte
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          type: string
+      type: object
+    updatedAt:
+      description: The time of last update
+      format: date-time
+      type: string
+  securitySchemes:
+    Bearer:
+      description: |
+        Set Bearer followed by your API key as the Authorization header in your API requests.
+
+        ```shell
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+        ```
+
+        Below is an example curl request with an API key in the Authorization header.
+
+        ```shell
+        curl --request GET \
+        --url https://api.dyspatch.io/templates\
+        --header 'Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678'
+        ```
+      in: header
+      name: Authorization
+      type: apiKey
