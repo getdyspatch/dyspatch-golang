@@ -24,10 +24,22 @@ go get golang.org/x/net/context
 go get github.com/antihax/optional
 ```
 
-Install the client project:
+Install the latest version of the client project:
 ```golang
 go get -u github.com/getdyspatch/dyspatch-golang
 ```
+
+Installing a versioned client:
+```golang
+go get gopkg.in/getdyspatch/dyspatch-golang.v1
+```
+
+Importing a versioned client:
+```golang
+import "gopkg.in/getdyspatch/dyspatch-golang.v1"
+```
+
+Read more at [gopkg.in](https://gopkg.in/getdyspatch/dyspatch-golang.v1)
 
 ## Getting Started
 
