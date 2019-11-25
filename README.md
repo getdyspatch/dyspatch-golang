@@ -31,14 +31,6 @@ For more information, please visit [https://docs.dyspatch.io](https://docs.dyspa
 
 ## Installation
 
-Install the following dependencies:
-```
-go get github.com/stretchr/testify/assert
-go get golang.org/x/oauth2
-go get golang.org/x/net/context
-go get github.com/antihax/optional
-```
-
 Install the latest version of the client project:
 ```golang
 go get -u github.com/getdyspatch/dyspatch-golang
@@ -46,7 +38,7 @@ go get -u github.com/getdyspatch/dyspatch-golang
 
 Installing a versioned client:
 ```golang
-go get gopkg.in/getdyspatch/dyspatch-golang.v2
+go get -u gopkg.in/getdyspatch/dyspatch-golang.v2
 ```
 
 Importing a versioned client:
