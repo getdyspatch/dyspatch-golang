@@ -1,4 +1,4 @@
-# Go API client for dyspatch
+# Go API client for Dyspatch
 
 # Introduction
 The Dyspatch API is based on the REST paradigm, and features resource based
@@ -20,20 +20,23 @@ For more information, please visit [https://docs.dyspatch.io](https://docs.dyspa
 
 ## Installation
 
-Install the following dependencies:
-
-```shell
-go get github.com/stretchr/testify/assert
-go get golang.org/x/oauth2
-go get golang.org/x/net/context
-go get github.com/antihax/optional
+Install the latest version of the client project:
+```sh
+go get -u github.com/getdyspatch/dyspatch-golang
 ```
 
-Put the package under your project folder and add the following in import:
+Installing a versioned client:
 
-```golang
-import "./dyspatch"
+```sh
+go get -u gopkg.in/getdyspatch/dyspatch-golang.v3
 ```
+
+Importing a versioned client:
+
+```go
+import "gopkg.in/getdyspatch/dyspatch-golang.v3"
+```
+
 
 ## Getting Started
 
