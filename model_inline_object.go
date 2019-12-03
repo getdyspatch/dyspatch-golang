@@ -9,24 +9,7 @@
  */
 
 package dyspatch
-import (
-	"time"
-)
-// LocalizationRead struct for LocalizationRead
-type LocalizationRead struct {
-	// An opaque, unique identifier for a localization
-	Id string `json:"id,omitempty"`
-	// A language identifier comprised of a language and a country identifier. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/). 
-	Language string `json:"language,omitempty"`
-	// The API url for a specific localization
-	Url string `json:"url,omitempty"`
-	// An opaque, unique identifier for a template
-	Template string `json:"template,omitempty"`
-	Compiled CompiledRead `json:"compiled,omitempty"`
-	// The time of initial creation
-	CreatedAt time.Time `json:"createdAt,omitempty"`
-	// The time of last update
-	UpdatedAt time.Time `json:"updatedAt,omitempty"`
-	// The user-specified name of a localization
+// InlineObject struct for InlineObject
+type InlineObject struct {
 	Name string `json:"name,omitempty"`
 }

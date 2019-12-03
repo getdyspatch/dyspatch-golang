@@ -12,21 +12,20 @@ package dyspatch
 import (
 	"time"
 )
-// LocalizationRead struct for LocalizationRead
-type LocalizationRead struct {
-	// An opaque, unique identifier for a localization
+// DraftMetaRead struct for DraftMetaRead
+type DraftMetaRead struct {
+	// An opaque, unique identifier for a draft
 	Id string `json:"id,omitempty"`
-	// A language identifier comprised of a language and a country identifier. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/). 
-	Language string `json:"language,omitempty"`
-	// The API url for a specific localization
-	Url string `json:"url,omitempty"`
 	// An opaque, unique identifier for a template
-	Template string `json:"template,omitempty"`
-	Compiled CompiledRead `json:"compiled,omitempty"`
+	TemplateId string `json:"templateId,omitempty"`
+	// The name of a draft
+	Name string `json:"name,omitempty"`
+	// A description of the draft
+	Description string `json:"description,omitempty"`
+	// The API url for a specific draft
+	Url string `json:"url,omitempty"`
 	// The time of initial creation
 	CreatedAt time.Time `json:"createdAt,omitempty"`
 	// The time of last update
 	UpdatedAt time.Time `json:"updatedAt,omitempty"`
-	// The user-specified name of a localization
-	Name string `json:"name,omitempty"`
 }
