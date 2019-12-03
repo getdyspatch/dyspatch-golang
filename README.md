@@ -37,7 +37,7 @@ Importing a versioned client:
 import "gopkg.in/getdyspatch/dyspatch-golang.v3"
 ```
 
-
+Read more at [gopkg.in](https://gopkg.in/getdyspatch/dyspatch-golang.v3)
 ## Getting Started
 
 ```golang
