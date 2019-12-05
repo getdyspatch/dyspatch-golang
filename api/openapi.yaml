@@ -1658,9 +1658,7 @@ components:
     DraftsRead:
       properties:
         cursor:
-          description: Information about paginated results
-          properties: {}
-          type: object
+          $ref: '#/components/schemas/cursor'
         data:
           description: A list of draft metadata objects
           items:
