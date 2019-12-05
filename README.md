@@ -55,6 +55,42 @@ Importing a versioned client:
 import "gopkg.in/getdyspatch/dyspatch-golang.v3"
 ```
 
+## Getting Started	
+
+```golang	
+package main	
+import (	
+	"fmt"	
+	"github.com/antihax/optional"	
+	"gopkg.in/getdyspatch/dyspatch-golang.v3"	
+	"golang.org/x/net/context"	
+)	
+func main() {	
+	cfg := dyspatch.NewConfiguration()	
+    cfg.AddDefaultHeader("Accept", "application/vnd.dyspatch.2019.10+json") // Set the API version	
+	auth := context.WithValue(context.Background(), dyspatch.ContextAPIKey, dyspatch.APIKey{	
+		Key:    "DYSPATCH_API_KEY",	
+		Prefix: "Bearer",	
+	})	
+	api := dyspatch.NewAPIClient(cfg)	
+	opts := dyspatch.TemplatesGetOpts{Cursor: optional.NewString("")} // Use this to page API results	
+	templates, _, err := api.TemplatesApi.TemplatesGet(auth, &opts)	
+	if err != nil {	
+		fmt.Println(err)	
+	}	
+	for _, template := range templates.Data {	
+		fmt.Println(template.Name)	
+	}	
+    	
+    res, err := client.DraftsApi.DraftsDraftIdLocalizationsLanguageIdPut(auth, "tdft_01dkyyta7dg5frv8e01186cdzf", "fr-CA", dyspatch.InlineObject{Name: "Test"})	
+	if err != nil {	
+		fmt.Println(err)	
+	} else {	
+		fmt.Println(res.Status)	
+	}	
+}	
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api.dyspatch.io*
