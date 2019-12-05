@@ -7,14 +7,14 @@ info:
   description: |
     # Introduction
 
-    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
-    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+    The Dyspatch API is based on the REST paradigm and features resource based URLs with standard HTTP response
+    codes to indicate errors. We use standard HTTP authentication and request verbs and all responses are JSON formatted.
     See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
     how to implement Dyspatch.
 
     ## API Client Libraries
 
-    Dyspatch provides API Clients for popular languages and web frameworks.
+    Dyspatch provides API Clients for the following languages and web frameworks:
 
     - [Java](https://github.com/getdyspatch/dyspatch-java)
     - [Javascript](https://github.com/getdyspatch/dyspatch-javascript)
@@ -25,17 +25,15 @@ info:
   termsOfService: https://www.dyspatch.io/legal/terms-of-service/
   title: Dyspatch API
   version: "2019.10"
-  x-logo:
-    url: /api/dyspatch_logo.png
 servers:
 - url: https://api.dyspatch.io/
 tags:
 - description: |
-    Templates are the email templates found in your Dyspatch account. Only the published Template Draft is returned.
+    Templates are the email templates found in your Dyspatch account. Only the published Template Draft is returned. To find a specific draft, use the [Drafts API](/#tag/Drafts).
     A typical integration will start with using the Templates list endpoint to iterate through and sync Templates.
   name: Templates
 - description: |
-    Drafts represent unpublished versions of templates that are still mutable. There could be many in progress drafts for a template.
+    Drafts represent unpublished versions of email templates that are still mutable. There could be many in progress drafts for a template.
   name: Drafts
 - description: |
     Localization objects are the same as Template objects except they contain localized content.
@@ -258,8 +256,15 @@ paths:
       - Templates
   /drafts:
     get:
-      description: Returns all drafts for your organization.
+      description: Gets a list of all drafts for your oranization. Up to 25 results
+        returned before results are paginated.
       parameters:
+      - description: A cursor value used to retrieve a specific page from a paginated
+          result set.
+        in: query
+        name: cursor
+        schema:
+          type: string
       - description: Filter the list of drafts by a particular status
         in: query
         name: status
@@ -361,106 +366,10 @@ paths:
       summary: List Drafts
       tags:
       - Drafts
-  /drafts/{draftId}/publishRequest:
-    post:
-      description: Moves the draft into submitted state.
-      parameters:
-      - description: A draft ID
-        in: path
-        name: draftId
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          content: {}
-          description: Successfully submitted
-        400:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Invalid request
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        401:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Unauthenticated
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        403:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Unauthorized
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        404:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Resource not found
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        429:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Rate limit exceeded
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        500:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Server error
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-        default:
-          content:
-            application/vnd.dyspatch.2019.10+json:
-              schema:
-                $ref: '#/components/schemas/APIError'
-          description: Server error
-          headers:
-            X-RateLimit-Remaining:
-              description: The number of requests left for the time window.
-              schema:
-                type: integer
-      security:
-      - Bearer: []
-      summary: Submit the draft for approval
-      tags:
-      - Drafts
   /drafts/{draftId}:
     get:
       description: Gets a draft object with the matching ID. The "compiled" field
-        will contain the template in the default, unlocalized form.
+        will contain the unlocalized default template object.
       parameters:
       - description: A draft ID
         in: path
@@ -578,7 +487,7 @@ paths:
       - Drafts
   /drafts/{draftId}/localizations:
     get:
-      description: Returns localization metadata for the draft
+      description: Returns localization metadata object for a template draft.
       parameters:
       - description: A draft ID
         in: path
@@ -600,14 +509,445 @@ paths:
               description: The number of requests left for the current time window
               schema:
                 type: integer
+        400:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
       security:
       - Bearer: []
-      summary: Get localizations on a draft
+      summary: Get Localizations on a Draft
       tags:
       - Drafts
+  /drafts/{draftId}/localizationKeys:
+    get:
+      description: Returns the list of values that need to be translated for the draft.
+        Set the `Accept` header to `application/vnd.dyspatch.2019.10+json` to get
+        a JSON object, or `text/vnd.dyspatch.2019.10+x-gettext-translation` to get
+        the POT file.
+      parameters:
+      - description: A draft ID
+        in: path
+        name: draftId
+        required: true
+        schema:
+          type: string
+      - description: A version of the API that should be used for the request. For
+          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json".
+        in: header
+        name: Accept
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LocalizationKeyRead'
+                type: array
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LocalizationKeyRead'
+                type: array
+          description: Localization keys
+        400:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+            text/vnd.dyspatch.2019.10+x-gettext-translation:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: Get Localization Keys
+      tags:
+      - Drafts
+  /drafts/{draftId}/publishRequest:
+    post:
+      description: Moves the draft into [submitted and locked state](https://docs.dyspatch.io/templates/submitting_a_template/#awaiting-approval).
+        This will allow your email stakeholders to review the template draft and provide
+        feedback.
+      parameters:
+      - description: A draft ID
+        in: path
+        name: draftId
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content: {}
+          description: Successfully submitted
+        400:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: Submit the Draft for Approval
+      tags:
+      - Drafts
+  /drafts/{draftId}/localizations/{languageId}/translations:
+    put:
+      description: Completely replaces any existing translations for the given language
+        with those provided in request body. Variables embedded in keys or values
+        are expected to be in the format `%(my_variable)s` and will automatically
+        convert to the correct Dyspatch format depending on the type of template.
+        Accepts key/value pairs in JSON format or in gettext PO file format. For JSON
+        set `Content-Type` header to `application/json`. For gettext PO format set
+        `Content-Type` header to `text/x-gettext-translation`.
+      parameters:
+      - description: A draft ID
+        in: path
+        name: draftId
+        required: true
+        schema:
+          type: string
+      - description: 'A language ID (eg: en-US)'
+        in: path
+        name: languageId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              additionalProperties:
+                type: string
+              example:
+                Hello %(name)s: Bonjour %(name)s
+                Welcome: Bienvenue
+              type: object
+        required: true
+      responses:
+        200:
+          content: {}
+          description: Successful
+        400:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+      security:
+      - Bearer: []
+      summary: Set Translations for Language
+      tags:
+      - Drafts
+      x-codegen-request-body-name: body
   /drafts/{draftId}/localizations/{languageId}:
     delete:
-      description: Deletes the localization with the given language ID if it exists
+      description: Deletes the localization with the given `languageId` if it exists.
       parameters:
       - description: A draft ID
         in: path
@@ -625,14 +965,91 @@ paths:
         200:
           content: {}
           description: Successful delete
+        400:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
       security:
       - Bearer: []
-      summary: Remove a localization
+      summary: Remove a Localization
       tags:
       - Drafts
     put:
       description: Inserts a localization or sets the name on an existing localization
-        that already uses the languageId
+        that already uses the `languageId`.
       parameters:
       - description: A draft ID
         in: path
@@ -661,96 +1078,92 @@ paths:
         200:
           content: {}
           description: Successful upsert
-      security:
-      - Bearer: []
-      summary: Create or update a localization
-      tags:
-      - Drafts
-      x-codegen-request-body-name: body
-  /drafts/{draftId}/localizations/{languageId}/translations:
-    put:
-      description: Completely replaces any existing translations for the given language
-        with those provided in request body. Variables embedded in keys or values
-        are expected to be in the format `%(my_variable)s` and will automatically
-        convert to the correct Dyspatch format depending on the type of template.
-        Accepts key/value pairs in JSON format or in gettext PO file format. For JSON
-        set `Content-Type` header to `application/json`. For gettext PO format set
-        `Content-Type` header to `text/x-gettext-translation`.
-      parameters:
-      - description: A draft ID
-        in: path
-        name: draftId
-        required: true
-        schema:
-          type: string
-      - description: 'A language ID (eg: en-US)'
-        in: path
-        name: languageId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_1'
-        content:
-          '*/*':
-            schema:
-              properties:
-                name:
-                  example: English (US)
-                  type: string
-              type: object
-        required: true
-      responses:
-        200:
-          content: {}
-          description: Successful
-      security:
-      - Bearer: []
-      summary: Set translations for language
-      tags:
-      - Drafts
-      x-codegen-request-body-name: body
-  /drafts/{draftId}/localizationKeys:
-    get:
-      description: Returns the list of values that need to be translated for the draft.
-        Set the `Accept` header to `application/vnd.dyspatch.2019.10+json` to get
-        a JSON object, or `text/vnd.dyspatch.2019.10+x-gettext-translation` to get
-        the POT file.
-      parameters:
-      - description: A draft ID
-        in: path
-        name: draftId
-        required: true
-        schema:
-          type: string
-      - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
-        in: header
-        name: Accept
-        schema:
-          type: string
-      responses:
-        200:
+        400:
           content:
             application/vnd.dyspatch.2019.10+json:
               schema:
-                items:
-                  $ref: '#/components/schemas/LocalizationKeyRead'
-                type: array
-            text/vnd.dyspatch.2019.10+x-gettext-translation:
+                $ref: '#/components/schemas/APIError'
+          description: Invalid request
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
               schema:
-                items:
-                  $ref: '#/components/schemas/LocalizationKeyRead'
-                type: array
-          description: Localization keys
+                type: integer
+        401:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthenticated
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        403:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        404:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Resource not found
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        429:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        500:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
+        default:
+          content:
+            application/vnd.dyspatch.2019.10+json:
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Server error
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              schema:
+                type: integer
       security:
       - Bearer: []
-      summary: Get localization keys
+      summary: Create or Update a Localization
       tags:
       - Drafts
+      x-codegen-request-body-name: body
   /localizations/{localizationId}:
     get:
-      description: Returns a specific localization object with a matching ID
+      description: Returns a specific localization object with a matching ID.
       parameters:
       - description: A localization ID
         in: path
@@ -870,7 +1283,7 @@ components:
   parameters:
     version:
       description: A version of the API that should be used for the request. For example,
-        to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+        to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json".
       in: header
       name: Accept
       schema:
@@ -934,12 +1347,6 @@ components:
         - awaitingTranslation
         type: string
   requestBodies:
-    inline_object_1:
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/inline_object_1'
-      required: true
     inline_object:
       content:
         '*/*':
@@ -1185,14 +1592,13 @@ components:
       type: object
     LocalizationMetaRead:
       properties:
-        localization:
+        id:
           description: An opaque, unique identifier for a localization
           example: loc_g3L7Cw6Hp5wUaf395LehwK
           type: string
         language:
-          description: |
-            A language identifier comprised of a language and a country identifier.
-            See [supported languages](https://docs.dyspatch.io/localization/supported_languages/).
+          description: "A language identifier comprised of a language and a country\
+            \ identifier. \nSee [supported languages](https://docs.dyspatch.io/localization/supported_languages/).\n"
           example: en-US
           type: string
         name:
@@ -1215,9 +1621,8 @@ components:
           example: loc_g3L7Cw6Hp5wUaf395LehwK
           type: string
         language:
-          description: |
-            A language identifier comprised of a language and a country identifier.
-            See [supported languages](https://docs.dyspatch.io/localization/supported_languages/).
+          description: "A language identifier comprised of a language and a country\
+            \ identifier. \nSee [supported languages](https://docs.dyspatch.io/localization/supported_languages/).\n"
           example: en-US
           type: string
         url:
@@ -1253,7 +1658,9 @@ components:
     DraftsRead:
       properties:
         cursor:
-          $ref: '#/components/schemas/cursor'
+          description: Information about paginated results
+          properties: {}
+          type: object
         data:
           description: A list of draft metadata objects
           items:
@@ -1349,12 +1756,6 @@ components:
           type: string
       type: object
     inline_object:
-      properties:
-        name:
-          example: English (US)
-          type: string
-      type: object
-    inline_object_1:
       properties:
         name:
           example: English (US)

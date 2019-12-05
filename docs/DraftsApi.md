@@ -5,12 +5,12 @@ All URIs are relative to *https://api.dyspatch.io*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DraftsDraftIdGet**](DraftsApi.md#DraftsDraftIdGet) | **Get** /drafts/{draftId} | Get Draft by ID
-[**DraftsDraftIdLocalizationKeysGet**](DraftsApi.md#DraftsDraftIdLocalizationKeysGet) | **Get** /drafts/{draftId}/localizationKeys | Get localization keys
-[**DraftsDraftIdLocalizationsGet**](DraftsApi.md#DraftsDraftIdLocalizationsGet) | **Get** /drafts/{draftId}/localizations | Get localizations on a draft
-[**DraftsDraftIdLocalizationsLanguageIdDelete**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdDelete) | **Delete** /drafts/{draftId}/localizations/{languageId} | Remove a localization
-[**DraftsDraftIdLocalizationsLanguageIdPut**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdPut) | **Put** /drafts/{draftId}/localizations/{languageId} | Create or update a localization
-[**DraftsDraftIdLocalizationsLanguageIdTranslationsPut**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdTranslationsPut) | **Put** /drafts/{draftId}/localizations/{languageId}/translations | Set translations for language
-[**DraftsDraftIdPublishRequestPost**](DraftsApi.md#DraftsDraftIdPublishRequestPost) | **Post** /drafts/{draftId}/publishRequest | Submit the draft for approval
+[**DraftsDraftIdLocalizationKeysGet**](DraftsApi.md#DraftsDraftIdLocalizationKeysGet) | **Get** /drafts/{draftId}/localizationKeys | Get Localization Keys
+[**DraftsDraftIdLocalizationsGet**](DraftsApi.md#DraftsDraftIdLocalizationsGet) | **Get** /drafts/{draftId}/localizations | Get Localizations on a Draft
+[**DraftsDraftIdLocalizationsLanguageIdDelete**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdDelete) | **Delete** /drafts/{draftId}/localizations/{languageId} | Remove a Localization
+[**DraftsDraftIdLocalizationsLanguageIdPut**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdPut) | **Put** /drafts/{draftId}/localizations/{languageId} | Create or Update a Localization
+[**DraftsDraftIdLocalizationsLanguageIdTranslationsPut**](DraftsApi.md#DraftsDraftIdLocalizationsLanguageIdTranslationsPut) | **Put** /drafts/{draftId}/localizations/{languageId}/translations | Set Translations for Language
+[**DraftsDraftIdPublishRequestPost**](DraftsApi.md#DraftsDraftIdPublishRequestPost) | **Post** /drafts/{draftId}/publishRequest | Submit the Draft for Approval
 [**DraftsGet**](DraftsApi.md#DraftsGet) | **Get** /drafts | List Drafts
 
 
@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 Get Draft by ID
 
-Gets a draft object with the matching ID. The \"compiled\" field will contain the template in the default, unlocalized form.
+Gets a draft object with the matching ID. The \"compiled\" field will contain the unlocalized default template object.
 
 ### Required Parameters
 
@@ -54,7 +54,7 @@ Name | Type | Description  | Notes
 
 > []LocalizationKeyRead DraftsDraftIdLocalizationKeysGet(ctx, draftId, optional)
 
-Get localization keys
+Get Localization Keys
 
 Returns the list of values that need to be translated for the draft. Set the `Accept` header to `application/vnd.dyspatch.2019.10+json` to get a JSON object, or `text/vnd.dyspatch.2019.10+x-gettext-translation` to get the POT file.
 
@@ -75,7 +75,7 @@ Optional parameters are passed through a pointer to a DraftsDraftIdLocalizationK
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **accept** | **optional.String**| A version of the API that should be used for the request. For example, to use version \&quot;2019.10\&quot;, set the value to \&quot;application/vnd.dyspatch.2019.10+json\&quot; | 
+ **accept** | **optional.String**| A version of the API that should be used for the request. For example, to use version \&quot;2019.10\&quot;, set the value to \&quot;application/vnd.dyspatch.2019.10+json\&quot;. | 
 
 ### Return type
 
@@ -99,9 +99,9 @@ Name | Type | Description  | Notes
 
 > []LocalizationMetaRead DraftsDraftIdLocalizationsGet(ctx, draftId)
 
-Get localizations on a draft
+Get Localizations on a Draft
 
-Returns localization metadata for the draft
+Returns localization metadata object for a template draft.
 
 ### Required Parameters
 
@@ -133,9 +133,9 @@ Name | Type | Description  | Notes
 
 > DraftsDraftIdLocalizationsLanguageIdDelete(ctx, draftId, languageId)
 
-Remove a localization
+Remove a Localization
 
-Deletes the localization with the given language ID if it exists
+Deletes the localization with the given `languageId` if it exists.
 
 ### Required Parameters
 
@@ -157,7 +157,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/vnd.dyspatch.2019.10+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -168,9 +168,9 @@ Name | Type | Description  | Notes
 
 > DraftsDraftIdLocalizationsLanguageIdPut(ctx, draftId, languageId, body)
 
-Create or update a localization
+Create or Update a Localization
 
-Inserts a localization or sets the name on an existing localization that already uses the languageId
+Inserts a localization or sets the name on an existing localization that already uses the `languageId`.
 
 ### Required Parameters
 
@@ -193,7 +193,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/vnd.dyspatch.2019.10+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -204,7 +204,7 @@ Name | Type | Description  | Notes
 
 > DraftsDraftIdLocalizationsLanguageIdTranslationsPut(ctx, draftId, languageId, body)
 
-Set translations for language
+Set Translations for Language
 
 Completely replaces any existing translations for the given language with those provided in request body. Variables embedded in keys or values are expected to be in the format `%(my_variable)s` and will automatically convert to the correct Dyspatch format depending on the type of template. Accepts key/value pairs in JSON format or in gettext PO file format. For JSON set `Content-Type` header to `application/json`. For gettext PO format set `Content-Type` header to `text/x-gettext-translation`.
 
@@ -216,7 +216,7 @@ Name | Type | Description  | Notes
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **draftId** | **string**| A draft ID | 
 **languageId** | **string**| A language ID (eg: en-US) | 
-**body** | [**InlineObject1**](InlineObject1.md)|  | 
+**body** | [**map[string]string**](string.md)|  | 
 
 ### Return type
 
@@ -229,7 +229,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/vnd.dyspatch.2019.10+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -240,9 +240,9 @@ Name | Type | Description  | Notes
 
 > DraftsDraftIdPublishRequestPost(ctx, draftId)
 
-Submit the draft for approval
+Submit the Draft for Approval
 
-Moves the draft into submitted state.
+Moves the draft into [submitted and locked state](https://docs.dyspatch.io/templates/submitting_a_template/#awaiting-approval). This will allow your email stakeholders to review the template draft and provide feedback.
 
 ### Required Parameters
 
@@ -276,7 +276,7 @@ Name | Type | Description  | Notes
 
 List Drafts
 
-Returns all drafts for your organization.
+Gets a list of all drafts for your oranization. Up to 25 results returned before results are paginated.
 
 ### Required Parameters
 
@@ -293,6 +293,7 @@ Optional parameters are passed through a pointer to a DraftsGetOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **cursor** | **optional.String**| A cursor value used to retrieve a specific page from a paginated result set. | 
  **status** | **optional.String**| Filter the list of drafts by a particular status | 
 
 ### Return type
