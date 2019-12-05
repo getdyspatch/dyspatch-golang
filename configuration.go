@@ -66,7 +66,7 @@ func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		BasePath:      "https://api.dyspatch.io",
 		DefaultHeader: make(map[string]string),
-		UserAgent:     "OpenAPI-Generator/3.0.1/go",
+		UserAgent:     "OpenAPI-Generator/3.0.2/go",
 		Debug:         false,
 	}
 	return cfg

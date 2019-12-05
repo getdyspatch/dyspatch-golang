@@ -17,7 +17,7 @@ Generator](https://openapi-generator.tech) project.  By using the
 generate an API client. 
 
 - API version: 2019.10
-- Package version: 3.0.1
+- Package version: 3.0.2
 - Build package: org.openapitools.codegen.languages.GoClientCodegen
 For more information, please visit [https://docs.dyspatch.io](https://docs.dyspatch.io)
 

@@ -11,8 +11,7 @@
 package dyspatch
 // DraftsRead struct for DraftsRead
 type DraftsRead struct {
-	// Information about paginated results
-	Cursor map[string]interface{} `json:"cursor,omitempty"`
+	Cursor Cursor `json:"cursor,omitempty"`
 	// A list of draft metadata objects
 	Data []DraftMetaRead `json:"data,omitempty"`
 }
