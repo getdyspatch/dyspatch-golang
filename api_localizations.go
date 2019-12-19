@@ -1,7 +1,7 @@
 /*
  * Dyspatch API
  *
- * # Introduction  The Dyspatch API is based on the REST paradigm and features resource based URLs with standard HTTP response codes to indicate errors. We use standard HTTP authentication and request verbs and all responses are JSON formatted. See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on how to implement Dyspatch.  ## API Client Libraries  Dyspatch provides API Clients for the following languages and web frameworks:  - [Java](https://github.com/getdyspatch/dyspatch-java) - [Javascript](https://github.com/getdyspatch/dyspatch-javascript) - [Python](https://github.com/getdyspatch/dyspatch-python) - [C#](https://github.com/getdyspatch/dyspatch-dotnet) - [Go](https://github.com/getdyspatch/dyspatch-golang) - [Ruby](https://github.com/getdyspatch/dyspatch-ruby) 
+ * # Introduction The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted. See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on how to implement Dyspatch. ## API Client Libraries Dyspatch provides API Clients for popular languages and web frameworks. - [Java](https://github.com/getdyspatch/dyspatch-java) - [Javascript](https://github.com/getdyspatch/dyspatch-javascript) - [Python](https://github.com/getdyspatch/dyspatch-python) - [C#](https://github.com/getdyspatch/dyspatch-dotnet) - [Go](https://github.com/getdyspatch/dyspatch-golang) - [Ruby](https://github.com/getdyspatch/dyspatch-ruby) 
  *
  * API version: 2019.10
  * Contact: support@dyspatch.io
@@ -15,7 +15,6 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
-	"fmt"
 	"strings"
 )
 
@@ -28,14 +27,15 @@ var (
 type LocalizationsApiService service
 
 /*
-LocalizationsLocalizationIdGet Get Localization Object by ID
-Returns a specific localization object with a matching ID.
+GetLocalizationById Get Localization Object by ID
+Returns a specific localization object with a matching ID
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param localizationId A localization ID
  * @param targetLanguage The type of templating language to compile as. Should only be used for visual templates.
+ * @param accept A version of the API that should be used for the request. For example, to use version \"2019.10\", set the value to \"application/vnd.dyspatch.2019.10+json\"
 @return LocalizationRead
 */
-func (a *LocalizationsApiService) LocalizationsLocalizationIdGet(ctx _context.Context, localizationId string, targetLanguage string) (LocalizationRead, *_nethttp.Response, error) {
+func (a *LocalizationsApiService) GetLocalizationById(ctx _context.Context, localizationId string, targetLanguage string, accept string) (LocalizationRead, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
@@ -47,7 +47,7 @@ func (a *LocalizationsApiService) LocalizationsLocalizationIdGet(ctx _context.Co
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/localizations/{localizationId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"localizationId"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", localizationId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"localizationId"+"}", _neturl.QueryEscape(parameterToString(localizationId, "")) , -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -64,13 +64,14 @@ func (a *LocalizationsApiService) LocalizationsLocalizationIdGet(ctx _context.Co
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/vnd.dyspatch.2019.10+json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.dyspatch.2019.10+json", "*/*"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Accept"] = parameterToString(accept, "")
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
