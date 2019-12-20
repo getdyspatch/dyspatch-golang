@@ -97,17 +97,17 @@ All URIs are relative to *https://api.dyspatch.io*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DraftsApi* | [**DraftsDraftIdGet**](docs/DraftsApi.md#draftsdraftidget) | **Get** /drafts/{draftId} | Get Draft by ID
-*DraftsApi* | [**DraftsDraftIdLocalizationKeysGet**](docs/DraftsApi.md#draftsdraftidlocalizationkeysget) | **Get** /drafts/{draftId}/localizationKeys | Get Localization Keys
-*DraftsApi* | [**DraftsDraftIdLocalizationsGet**](docs/DraftsApi.md#draftsdraftidlocalizationsget) | **Get** /drafts/{draftId}/localizations | Get Localizations on a Draft
-*DraftsApi* | [**DraftsDraftIdLocalizationsLanguageIdDelete**](docs/DraftsApi.md#draftsdraftidlocalizationslanguageiddelete) | **Delete** /drafts/{draftId}/localizations/{languageId} | Remove a Localization
-*DraftsApi* | [**DraftsDraftIdLocalizationsLanguageIdPut**](docs/DraftsApi.md#draftsdraftidlocalizationslanguageidput) | **Put** /drafts/{draftId}/localizations/{languageId} | Create or Update a Localization
-*DraftsApi* | [**DraftsDraftIdLocalizationsLanguageIdTranslationsPut**](docs/DraftsApi.md#draftsdraftidlocalizationslanguageidtranslationsput) | **Put** /drafts/{draftId}/localizations/{languageId}/translations | Set Translations for Language
-*DraftsApi* | [**DraftsDraftIdPublishRequestPost**](docs/DraftsApi.md#draftsdraftidpublishrequestpost) | **Post** /drafts/{draftId}/publishRequest | Submit the Draft for Approval
-*DraftsApi* | [**DraftsGet**](docs/DraftsApi.md#draftsget) | **Get** /drafts | List Drafts
-*LocalizationsApi* | [**LocalizationsLocalizationIdGet**](docs/LocalizationsApi.md#localizationslocalizationidget) | **Get** /localizations/{localizationId} | Get Localization Object by ID
-*TemplatesApi* | [**TemplatesGet**](docs/TemplatesApi.md#templatesget) | **Get** /templates | List Templates
-*TemplatesApi* | [**TemplatesTemplateIdGet**](docs/TemplatesApi.md#templatestemplateidget) | **Get** /templates/{templateId} | Get Template by ID
+*DraftsApi* | [**DeleteLocalization**](docs/DraftsApi.md#deletelocalization) | **Delete** /drafts/{draftId}/localizations/{languageId} | Remove a localization
+*DraftsApi* | [**GetDraftById**](docs/DraftsApi.md#getdraftbyid) | **Get** /drafts/{draftId} | Get Draft by ID
+*DraftsApi* | [**GetDraftLocalizationKeys**](docs/DraftsApi.md#getdraftlocalizationkeys) | **Get** /drafts/{draftId}/localizationKeys | Get localization keys
+*DraftsApi* | [**GetDrafts**](docs/DraftsApi.md#getdrafts) | **Get** /drafts | List Drafts
+*DraftsApi* | [**GetLocalizationForDraft**](docs/DraftsApi.md#getlocalizationfordraft) | **Get** /drafts/{draftId}/localizations | Get localizations on a draft
+*DraftsApi* | [**SaveLocalization**](docs/DraftsApi.md#savelocalization) | **Put** /drafts/{draftId}/localizations/{languageId} | Create or update a localization
+*DraftsApi* | [**SetTranslation**](docs/DraftsApi.md#settranslation) | **Put** /drafts/{draftId}/localizations/{languageId}/translations | Set translations for language
+*DraftsApi* | [**SubmitDraftForApproval**](docs/DraftsApi.md#submitdraftforapproval) | **Post** /drafts/{draftId}/publishRequest | Submit the draft for approval
+*LocalizationsApi* | [**GetLocalizationById**](docs/LocalizationsApi.md#getlocalizationbyid) | **Get** /localizations/{localizationId} | Get Localization Object by ID
+*TemplatesApi* | [**GetTemplateById**](docs/TemplatesApi.md#gettemplatebyid) | **Get** /templates/{templateId} | Get Template by ID
+*TemplatesApi* | [**GetTemplates**](docs/TemplatesApi.md#gettemplates) | **Get** /templates | List Templates
 
 
 ## Documentation For Models
@@ -149,4 +149,3 @@ r, err := client.Service.Operation(auth, args)
 ## Author
 
 support@dyspatch.io
-
