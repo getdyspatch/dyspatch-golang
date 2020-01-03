@@ -4,17 +4,17 @@ All URIs are relative to *https://api.dyspatch.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**LocalizationsLocalizationIdGet**](LocalizationsApi.md#LocalizationsLocalizationIdGet) | **Get** /localizations/{localizationId} | Get Localization Object by ID
+[**GetLocalizationById**](LocalizationsApi.md#GetLocalizationById) | **Get** /localizations/{localizationId} | Get Localization Object by ID
 
 
 
-## LocalizationsLocalizationIdGet
+## GetLocalizationById
 
-> LocalizationRead LocalizationsLocalizationIdGet(ctx, localizationId, targetLanguage)
+> LocalizationRead GetLocalizationById(ctx, localizationId, targetLanguage, accept)
 
 Get Localization Object by ID
 
-Returns a specific localization object with a matching ID.
+Returns a specific localization object with a matching ID
 
 ### Required Parameters
 
@@ -24,6 +24,7 @@ Name | Type | Description  | Notes
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
 **localizationId** | **string**| A localization ID | 
 **targetLanguage** | **string**| The type of templating language to compile as. Should only be used for visual templates. | 
+**accept** | **string**| A version of the API that should be used for the request. For example, to use version \&quot;2019.10\&quot;, set the value to \&quot;application/vnd.dyspatch.2019.10+json\&quot; | 
 
 ### Return type
 
@@ -36,7 +37,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/vnd.dyspatch.2019.10+json
+- **Accept**: application/vnd.dyspatch.2019.10+json, */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
