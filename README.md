@@ -71,7 +71,7 @@ const version = "application/vnd.dyspatch.2020.04+json"
 func main() {
 	cfg := dyspatch.NewConfiguration()
 	auth := context.WithValue(context.Background(), dyspatch.ContextAPIKey, dyspatch.APIKey{
-		Key:    os.Getenv("TEST_DELETE"),
+		Key:    "DYSPATCH_API_KEY",
 		Prefix: "Bearer",
 	})
 	
