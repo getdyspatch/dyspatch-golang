@@ -11,7 +11,7 @@ info:
     - [Java](https://github.com/getdyspatch/dyspatch-java) - [Javascript](https://github.com/getdyspatch/dyspatch-javascript) - [Python](https://github.com/getdyspatch/dyspatch-python) - [C#](https://github.com/getdyspatch/dyspatch-dotnet) - [Go](https://github.com/getdyspatch/dyspatch-golang) - [Ruby](https://github.com/getdyspatch/dyspatch-ruby)
   termsOfService: https://www.dyspatch.io/legal/terms-of-service/
   title: Dyspatch API
-  version: "2019.10"
+  version: "2020.04"
   x-logo:
     url: /api/dyspatch_logo.png
 servers:
@@ -45,7 +45,7 @@ paths:
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -56,7 +56,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 $ref: '#/components/schemas/TemplatesRead'
           description: A list of templates
@@ -177,10 +177,11 @@ paths:
           - ampscript
           - freemarker
           - cheetah
+          - jinja
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -191,7 +192,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 $ref: '#/components/schemas/TemplateRead'
           description: A template object with the requested ID. If the template has
@@ -324,7 +325,7 @@ paths:
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -335,7 +336,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 $ref: '#/components/schemas/DraftsRead'
           description: Drafts
@@ -456,7 +457,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -590,10 +591,11 @@ paths:
           - ampscript
           - freemarker
           - cheetah
+          - jinja
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -604,7 +606,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 $ref: '#/components/schemas/DraftRead'
           description: A draft object with the requested ID.
@@ -725,7 +727,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -736,7 +738,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 items:
                   $ref: '#/components/schemas/LocalizationMetaRead'
@@ -776,7 +778,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -814,7 +816,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -869,7 +871,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -891,6 +893,19 @@ paths:
       responses:
         200:
           description: Successful
+        403:
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/APIError'
+          description: Unauthorized
+          headers:
+            X-RateLimit-Remaining:
+              description: The number of requests left for the time window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
       security:
       - Bearer: []
       summary: Set translations for language
@@ -899,8 +914,8 @@ paths:
   /drafts/{draftId}/localizationKeys:
     get:
       description: Returns the list of values that need to be translated for the draft.
-        Set the `Accept` header to `application/vnd.dyspatch.2019.10+json` to get
-        a JSON object, or `text/vnd.dyspatch.2019.10+x-gettext-translation` to get
+        Set the `Accept` header to `application/vnd.dyspatch.2020.04+json` to get
+        a JSON object, or `text/vnd.dyspatch.2020.04+x-gettext-translation` to get
         the POT file.
       operationId: getDraftLocalizationKeys
       parameters:
@@ -913,7 +928,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -924,12 +939,12 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 items:
                   $ref: '#/components/schemas/LocalizationKeyRead'
                 type: array
-            text/vnd.dyspatch.2019.10+x-gettext-translation:
+            text/vnd.dyspatch.2020.04+x-gettext-translation:
               schema:
                 format: binary
                 type: string
@@ -965,10 +980,11 @@ paths:
           - ampscript
           - freemarker
           - cheetah
+          - jinja
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
         explode: false
         in: header
         name: Accept
@@ -979,7 +995,7 @@ paths:
       responses:
         200:
           content:
-            application/vnd.dyspatch.2019.10+json:
+            application/vnd.dyspatch.2020.04+json:
               schema:
                 $ref: '#/components/schemas/LocalizationRead'
           description: A localization object with the requested ID
@@ -1090,7 +1106,7 @@ components:
   parameters:
     version:
       description: A version of the API that should be used for the request. For example,
-        to use version "2019.10", set the value to "application/vnd.dyspatch.2019.10+json"
+        to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
       explode: false
       in: header
       name: Accept
@@ -1149,6 +1165,7 @@ components:
         - ampscript
         - freemarker
         - cheetah
+        - jinja
         type: string
       style: form
     localizationId:
@@ -1279,6 +1296,11 @@ components:
       description: An opaque, unique identifier for a draft
       example: tdft_g3L7Cw6Hp5wU
       type: string
+    localeGroupId:
+      description: the locale group this localization belongs to, if this field is
+        empty the localization does not belong to any locale group
+      example: lgr_alka38ajla301
+      type: string
     templateName:
       description: The name of a template
       type: string
@@ -1311,12 +1333,12 @@ components:
       description: The user-specified name of a localization
       example: English (US)
       type: string
-    languageId:
+    languages:
       description: |
-        A language identifier comprised of a language and a country identifier.
-        See [supported languages](https://docs.dyspatch.io/localization/supported_languages/).
-      example: en-US
-      type: string
+        a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+      items:
+        type: string
+      type: array
     createdAt:
       description: The time of initial creation
       format: date-time
@@ -1330,13 +1352,19 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         localizations:
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
         name: name
         description: description
@@ -1381,13 +1409,19 @@ components:
         data:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           localizations:
-          - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+          - localeGroup: lgr_alka38ajla301
+            languages:
+            - languages
+            - languages
             name: English (US)
-            language: en-US
+            id: loc_g3L7Cw6Hp5wUaf395LehwK
             url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-          - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+          - localeGroup: lgr_alka38ajla301
+            languages:
+            - languages
+            - languages
             name: English (US)
-            language: en-US
+            id: loc_g3L7Cw6Hp5wUaf395LehwK
             url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
           name: name
           description: description
@@ -1396,13 +1430,19 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           localizations:
-          - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+          - localeGroup: lgr_alka38ajla301
+            languages:
+            - languages
+            - languages
             name: English (US)
-            language: en-US
+            id: loc_g3L7Cw6Hp5wUaf395LehwK
             url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-          - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+          - localeGroup: lgr_alka38ajla301
+            languages:
+            - languages
+            - languages
             name: English (US)
-            language: en-US
+            id: loc_g3L7Cw6Hp5wUaf395LehwK
             url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
           name: name
           description: description
@@ -1429,13 +1469,19 @@ components:
           html: html
           text: text
         localizations:
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
         name: name
         description: description
@@ -1485,13 +1531,19 @@ components:
           html: html
           text: text
         localizations:
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
-        - localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        - localeGroup: lgr_alka38ajla301
+          languages:
+          - languages
+          - languages
           name: English (US)
-          language: en-US
+          id: loc_g3L7Cw6Hp5wUaf395LehwK
           url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
         name: name
         id: tdft_g3L7Cw6Hp5wU
@@ -1532,20 +1584,17 @@ components:
     LocalizationMetaRead:
       description: localization metadata
       example:
-        localization: loc_g3L7Cw6Hp5wUaf395LehwK
+        localeGroup: lgr_alka38ajla301
+        languages:
+        - languages
+        - languages
         name: English (US)
-        language: en-US
+        id: loc_g3L7Cw6Hp5wUaf395LehwK
         url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
       properties:
-        localization:
+        id:
           description: An opaque, unique identifier for a localization
           example: loc_g3L7Cw6Hp5wUaf395LehwK
-          type: string
-        language:
-          description: |
-            A language identifier comprised of a language and a country identifier.
-            See [supported languages](https://docs.dyspatch.io/localization/supported_languages/).
-          example: en-US
           type: string
         name:
           description: The user-specified name of a localization
@@ -1555,20 +1604,34 @@ components:
           description: The API url for a specific localization
           example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
           type: string
+        localeGroup:
+          description: the locale group this localization belongs to, if this field
+            is empty the localization does not belong to any locale group
+          example: lgr_alka38ajla301
+          type: string
+        languages:
+          description: |
+            a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+          items:
+            type: string
+          type: array
       type: object
     LocalizationRead:
       description: localization metadata and latest revision for associated template
       example:
         template: tem_g3L7Cw6Hp5wU
         createdAt: 2000-01-23T04:56:07.000+00:00
+        localeGroup: lgr_alka38ajla301
         compiled:
           sender: Example
           subject: subject
           replyTo: Example
           html: html
           text: text
+        languages:
+        - languages
+        - languages
         name: English (US)
-        language: en-US
         id: loc_g3L7Cw6Hp5wUaf395LehwK
         url: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -1577,12 +1640,12 @@ components:
           description: An opaque, unique identifier for a localization
           example: loc_g3L7Cw6Hp5wUaf395LehwK
           type: string
-        language:
+        languages:
           description: |
-            A language identifier comprised of a language and a country identifier.
-            See [supported languages](https://docs.dyspatch.io/localization/supported_languages/).
-          example: en-US
-          type: string
+            a list of locale codes that are available in the localization. See [supported languages](https://docs.dyspatch.io/localization/supported_languages/) for an exhaustive list of locale codes.
+          items:
+            type: string
+          type: array
         url:
           description: The API url for a specific localization
           example: /localizations/loc_g3L7Cw6Hp5wUaf395LehwK
@@ -1604,6 +1667,11 @@ components:
         name:
           description: The user-specified name of a localization
           example: English (US)
+          type: string
+        localeGroup:
+          description: the locale group this localization belongs to, if this field
+            is empty the localization does not belong to any locale group
+          example: lgr_alka38ajla301
           type: string
       type: object
     LocalizationKeyRead:
@@ -1757,7 +1825,7 @@ components:
         Set Bearer followed by your API key as the Authorization header in your API requests.
         ```shell Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678 ```
         Below is an example curl request with an API key in the Authorization header.
-        ```shell curl --request GET \ --url https://api.dyspatch.io/templates \ --header 'Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678' \ --header 'Accept: application/vnd.dyspatch.2019.10+json' ```
+        ```shell curl --request GET \ --url https://api.dyspatch.io/templates \ --header 'Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678' \ --header 'Accept: application/vnd.dyspatch.2020.04+json' ```
       in: header
       name: Authorization
       type: apiKey

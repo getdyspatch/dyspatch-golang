@@ -12,7 +12,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-const version = "application/vnd.dyspatch.2019.10+json"
+const version = "application/vnd.dyspatch.2020.04+json"
 
 func bodyToString(body io.ReadCloser) string {
 	buf := new(bytes.Buffer)

@@ -16,8 +16,8 @@ Generator](https://openapi-generator.tech) project.  By using the
 [OpenAPI-spec](https://www.openapis.org/) from a remote server, you can easily
 generate an API client.
 
-- API version: 2019.10
-- Package version: 4.0.0
+- API version: 2020.04
+- Package version: 5.0.0
 - Build package: org.openapitools.codegen.languages.GoClientCodegen
 For more information, please visit [https://docs.dyspatch.io](https://docs.dyspatch.io)
 
@@ -62,31 +62,28 @@ package main
 import (
 	"fmt"
 	"github.com/antihax/optional"
-	"gopkg.in/getdyspatch/dyspatch-golang.v3"
+	"gopkg.in/getdyspatch/dyspatch-golang.v5"
 	"golang.org/x/net/context"
 )
+
+const version = "application/vnd.dyspatch.2020.04+json"
+
 func main() {
 	cfg := dyspatch.NewConfiguration()
-    cfg.AddDefaultHeader("Accept", "application/vnd.dyspatch.2019.10+json") // Set the API version
 	auth := context.WithValue(context.Background(), dyspatch.ContextAPIKey, dyspatch.APIKey{
 		Key:    "DYSPATCH_API_KEY",
 		Prefix: "Bearer",
 	})
-	api := dyspatch.NewAPIClient(cfg)
-	opts := dyspatch.TemplatesGetOpts{Cursor: optional.NewString("")} // Use this to page API results
-	templates, _, err := api.TemplatesApi.TemplatesGet(auth, &opts)
+	
+	client := dyspatch.NewAPIClient(cfg)
+	opts := dyspatch.GetTemplatesOpts{Cursor: optional.NewString("")} // Use this to page API results
+
+	templates, _, err := client.TemplatesApi.GetTemplates(auth, version, &opts)
 	if err != nil {
 		fmt.Println(err)
 	}
 	for _, template := range templates.Data {
 		fmt.Println(template.Name)
-	}
-
-    res, err := client.DraftsApi.DraftsDraftIdLocalizationsLanguageIdPut(auth, "tdft_01dkyyta7dg5frv8e01186cdzf", "fr-CA", dyspatch.InlineObject{Name: "Test"})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(res.Status)
 	}
 }
 ```
