@@ -6,26 +6,42 @@ info:
     url: https://docs.dyspatch.io
   description: |
     # Introduction
-    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted. See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on how to implement Dyspatch.
-    ## API Client Libraries Dyspatch provides API Clients for popular languages and web frameworks.
-    - [Java](https://github.com/getdyspatch/dyspatch-java) - [Javascript](https://github.com/getdyspatch/dyspatch-javascript) - [Python](https://github.com/getdyspatch/dyspatch-python) - [C#](https://github.com/getdyspatch/dyspatch-dotnet) - [Go](https://github.com/getdyspatch/dyspatch-golang) - [Ruby](https://github.com/getdyspatch/dyspatch-ruby)
+
+    The Dyspatch API is based on the REST paradigm, and features resource based URLs with standard HTTP response
+    codes to indicate errors. We use standard HTTP authentication and request verbs, and all responses are JSON formatted.
+    See our [Implementation Guide](https://docs.dyspatch.io/development/implementing_dyspatch/) for more details on
+    how to implement Dyspatch.
+
+    ## API Client Libraries
+    Dyspatch provides API Clients for popular languages and web frameworks.
+
+    - [Java](https://github.com/getdyspatch/dyspatch-java)
+    - [Javascript](https://github.com/getdyspatch/dyspatch-javascript)
+    - [Python](https://github.com/getdyspatch/dyspatch-python)
+    - [C#](https://github.com/getdyspatch/dyspatch-dotnet)
+    - [Go](https://github.com/getdyspatch/dyspatch-golang)
+    - [Ruby](https://github.com/getdyspatch/dyspatch-ruby)
   termsOfService: https://www.dyspatch.io/legal/terms-of-service/
   title: Dyspatch API
-  version: "2020.04"
+  version: "2020.08"
   x-logo:
     url: /api/dyspatch_logo.png
 servers:
 - url: https://api.dyspatch.io
 tags:
 - description: |
-    Templates are the email templates found in your Dyspatch account. Only the published Template Draft is returned.
+    Templates are the email templates found in your Dyspatch account. Only the
+    published Template Draft is returned.
+
     A typical integration will start with using the Templates list endpoint to iterate through and sync Templates.
   name: Templates
 - description: |
     Drafts represent unpublished versions of templates that are still mutable. There could be many in progress drafts for a template.
   name: Drafts
 - description: |
-    Localization objects are the same as Template objects except they contain localized content.
+    Localization objects are the same as Template objects except they contain
+    localized content.
+
     If your account is using localizations then use this instead of the compiled Template object.
   name: Localizations
 paths:
@@ -45,7 +61,7 @@ paths:
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -54,9 +70,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 $ref: '#/components/schemas/TemplatesRead'
           description: A list of templates
@@ -67,7 +83,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -80,7 +96,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -93,7 +109,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -106,7 +122,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -119,7 +135,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -178,10 +194,11 @@ paths:
           - freemarker
           - cheetah
           - jinja
+          - liquid
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -190,9 +207,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 $ref: '#/components/schemas/TemplateRead'
           description: A template object with the requested ID. If the template has
@@ -204,7 +221,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -217,7 +234,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -230,7 +247,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -243,7 +260,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        404:
+        "404":
           content:
             '*/*':
               schema:
@@ -256,7 +273,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -269,7 +286,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -325,7 +342,7 @@ paths:
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -334,9 +351,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 $ref: '#/components/schemas/DraftsRead'
           description: Drafts
@@ -347,7 +364,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -360,7 +377,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -373,7 +390,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -386,7 +403,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        404:
+        "404":
           content:
             '*/*':
               schema:
@@ -399,7 +416,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -412,7 +429,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -457,7 +474,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -466,9 +483,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           description: Successfully submitted
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -481,7 +498,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -494,7 +511,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -507,7 +524,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        404:
+        "404":
           content:
             '*/*':
               schema:
@@ -520,7 +537,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -533,7 +550,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -592,10 +609,11 @@ paths:
           - freemarker
           - cheetah
           - jinja
+          - liquid
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -604,9 +622,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 $ref: '#/components/schemas/DraftRead'
           description: A draft object with the requested ID.
@@ -617,7 +635,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -630,7 +648,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -643,7 +661,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -656,7 +674,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        404:
+        "404":
           content:
             '*/*':
               schema:
@@ -669,7 +687,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -682,7 +700,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -727,7 +745,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -736,9 +754,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 items:
                   $ref: '#/components/schemas/LocalizationMetaRead'
@@ -778,7 +796,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -787,7 +805,7 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           description: Successful delete
       security:
       - Bearer: []
@@ -816,7 +834,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -836,7 +854,7 @@ paths:
               type: object
         required: true
       responses:
-        200:
+        "200":
           description: Successful upsert
       security:
       - Bearer: []
@@ -871,7 +889,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -891,9 +909,9 @@ paths:
               type: object
         required: true
       responses:
-        200:
+        "200":
           description: Successful
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -914,8 +932,8 @@ paths:
   /drafts/{draftId}/localizationKeys:
     get:
       description: Returns the list of values that need to be translated for the draft.
-        Set the `Accept` header to `application/vnd.dyspatch.2020.04+json` to get
-        a JSON object, or `text/vnd.dyspatch.2020.04+x-gettext-translation` to get
+        Set the `Accept` header to `application/vnd.dyspatch.2020.08+json` to get
+        a JSON object, or `text/vnd.dyspatch.2020.08+x-gettext-translation` to get
         the POT file.
       operationId: getDraftLocalizationKeys
       parameters:
@@ -928,7 +946,7 @@ paths:
           type: string
         style: simple
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -937,14 +955,14 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 items:
                   $ref: '#/components/schemas/LocalizationKeyRead'
                 type: array
-            text/vnd.dyspatch.2020.04+x-gettext-translation:
+            text/vnd.dyspatch.2020.08+x-gettext-translation:
               schema:
                 format: binary
                 type: string
@@ -981,10 +999,11 @@ paths:
           - freemarker
           - cheetah
           - jinja
+          - liquid
           type: string
         style: form
       - description: A version of the API that should be used for the request. For
-          example, to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+          example, to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
         explode: false
         in: header
         name: Accept
@@ -993,9 +1012,9 @@ paths:
           type: string
         style: simple
       responses:
-        200:
+        "200":
           content:
-            application/vnd.dyspatch.2020.04+json:
+            application/vnd.dyspatch.2020.08+json:
               schema:
                 $ref: '#/components/schemas/LocalizationRead'
           description: A localization object with the requested ID
@@ -1006,7 +1025,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        400:
+        "400":
           content:
             '*/*':
               schema:
@@ -1019,7 +1038,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        401:
+        "401":
           content:
             '*/*':
               schema:
@@ -1032,7 +1051,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        403:
+        "403":
           content:
             '*/*':
               schema:
@@ -1045,7 +1064,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        404:
+        "404":
           content:
             '*/*':
               schema:
@@ -1058,7 +1077,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        429:
+        "429":
           content:
             '*/*':
               schema:
@@ -1071,7 +1090,7 @@ paths:
               schema:
                 type: integer
               style: simple
-        500:
+        "500":
           content:
             '*/*':
               schema:
@@ -1106,7 +1125,7 @@ components:
   parameters:
     version:
       description: A version of the API that should be used for the request. For example,
-        to use version "2020.04", set the value to "application/vnd.dyspatch.2020.04+json"
+        to use version "2020.08", set the value to "application/vnd.dyspatch.2020.08+json"
       explode: false
       in: header
       name: Accept
@@ -1166,6 +1185,7 @@ components:
         - freemarker
         - cheetah
         - jinja
+        - liquid
         type: string
       style: form
     localizationId:
@@ -1313,9 +1333,6 @@ components:
       type: string
     draftName:
       description: The name of a draft
-      type: string
-    draftDescription:
-      description: A description of the draft
       type: string
     draftUrl:
       description: The API url for a specific draft
@@ -1465,6 +1482,7 @@ components:
         compiled:
           sender: Example
           subject: subject
+          ampHtml: ampHtml
           replyTo: Example
           html: html
           text: text
@@ -1527,6 +1545,7 @@ components:
         compiled:
           sender: Example
           subject: subject
+          ampHtml: ampHtml
           replyTo: Example
           html: html
           text: text
@@ -1625,6 +1644,7 @@ components:
         compiled:
           sender: Example
           subject: subject
+          ampHtml: ampHtml
           replyTo: Example
           html: html
           text: text
@@ -1691,14 +1711,12 @@ components:
         data:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          description: description
           id: tdft_g3L7Cw6Hp5wU
           templateId: tem_g3L7Cw6Hp5wU
           url: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          description: description
           id: tdft_g3L7Cw6Hp5wU
           templateId: tem_g3L7Cw6Hp5wU
           url: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
@@ -1717,7 +1735,6 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        description: description
         id: tdft_g3L7Cw6Hp5wU
         templateId: tem_g3L7Cw6Hp5wU
         url: /drafts/tdft_g3L7Cw6Hp5wUaf395LehwK/dft_g3L7Cw6Hp5wU
@@ -1733,9 +1750,6 @@ components:
           type: string
         name:
           description: The name of a draft
-          type: string
-        description:
-          description: A description of the draft
           type: string
         url:
           description: The API url for a specific draft
@@ -1788,6 +1802,7 @@ components:
       example:
         sender: Example
         subject: subject
+        ampHtml: ampHtml
         replyTo: Example
         html: html
         text: text
@@ -1808,6 +1823,10 @@ components:
           description: Base64 encoded template HTML body
           format: byte
           type: string
+        ampHtml:
+          description: Base64 encoded amp version of template body
+          format: byte
+          type: string
         text:
           description: Base64 encoded template text body
           format: byte
@@ -1822,10 +1841,21 @@ components:
   securitySchemes:
     Bearer:
       description: |
-        Set Bearer followed by your API key as the Authorization header in your API requests.
-        ```shell Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678 ```
+        Set Bearer followed by your API key as the Authorization header in your
+        API requests.
+
+        ```shell
+        Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678
+        ```
+
         Below is an example curl request with an API key in the Authorization header.
-        ```shell curl --request GET \ --url https://api.dyspatch.io/templates \ --header 'Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678' \ --header 'Accept: application/vnd.dyspatch.2020.04+json' ```
+
+        ```shell
+        curl --request GET \
+        --url https://api.dyspatch.io/templates \
+        --header 'Authorization: Bearer EXAMPLEAPIKEYXXXXXXXX12345678' \
+        --header 'Accept: application/vnd.dyspatch.2020.08+json'
+        ```
       in: header
       name: Authorization
       type: apiKey
