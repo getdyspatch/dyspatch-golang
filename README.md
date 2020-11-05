@@ -46,13 +46,13 @@ go get -u github.com/getdyspatch/dyspatch-golang
 Installing a versioned client:
 
 ```sh
-go get -u gopkg.in/getdyspatch/dyspatch-golang.v3
+go get -u gopkg.in/getdyspatch/dyspatch-golang.v6
 ```
 
 Importing a versioned client:
 
 ```go
-import "gopkg.in/getdyspatch/dyspatch-golang.v3"
+import "gopkg.in/getdyspatch/dyspatch-golang.v6"
 ```
 
 ## Getting Started
@@ -62,11 +62,11 @@ package main
 import (
 	"fmt"
 	"github.com/antihax/optional"
-	"gopkg.in/getdyspatch/dyspatch-golang.v5"
+	"gopkg.in/getdyspatch/dyspatch-golang.v6"
 	"golang.org/x/net/context"
 )
 
-const version = "application/vnd.dyspatch.2020.04+json"
+const version = "application/vnd.dyspatch.2020.08+json"
 
 func main() {
 	cfg := dyspatch.NewConfiguration()
