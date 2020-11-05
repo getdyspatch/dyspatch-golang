@@ -16,8 +16,8 @@ Generator](https://openapi-generator.tech) project.  By using the
 [OpenAPI-spec](https://www.openapis.org/) from a remote server, you can easily
 generate an API client.
 
-- API version: 2020.04
-- Package version: 5.0.0
+- API version: 2020.08
+- Package version: 6.0.0
 - Build package: org.openapitools.codegen.languages.GoClientCodegen
 For more information, please visit [https://docs.dyspatch.io](https://docs.dyspatch.io)
 
