@@ -16,8 +16,8 @@ Generator](https://openapi-generator.tech) project.  By using the
 [OpenAPI-spec](https://www.openapis.org/) from a remote server, you can easily
 generate an API client.
 
-- API version: 2020.04
-- Package version: 5.0.0
+- API version: 2020.11
+- Package version: 6.0.0
 - Build package: org.openapitools.codegen.languages.GoClientCodegen
 For more information, please visit [https://docs.dyspatch.io](https://docs.dyspatch.io)
 
@@ -46,13 +46,13 @@ go get -u github.com/getdyspatch/dyspatch-golang
 Installing a versioned client:
 
 ```sh
-go get -u gopkg.in/getdyspatch/dyspatch-golang.v3
+go get -u gopkg.in/getdyspatch/dyspatch-golang.v6
 ```
 
 Importing a versioned client:
 
 ```go
-import "gopkg.in/getdyspatch/dyspatch-golang.v3"
+import "gopkg.in/getdyspatch/dyspatch-golang.v6"
 ```
 
 ## Getting Started
@@ -62,11 +62,11 @@ package main
 import (
 	"fmt"
 	"github.com/antihax/optional"
-	"gopkg.in/getdyspatch/dyspatch-golang.v5"
+	"gopkg.in/getdyspatch/dyspatch-golang.v6"
 	"golang.org/x/net/context"
 )
 
-const version = "application/vnd.dyspatch.2020.04+json"
+const version = "application/vnd.dyspatch.2020.11+json"
 
 func main() {
 	cfg := dyspatch.NewConfiguration()
